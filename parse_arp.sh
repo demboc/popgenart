@@ -3,10 +3,11 @@
 # This is the parser script for the .arp file to get the loci & actual SNP sequences per sample. 
 
 # Check if input is ok
-while getopts "p:" opt; do
+while getopts "p:a:" opt; do
   case "$opt" in
 
     p) prefix="$OPTARG" ;;
+    a) arpfile="$OPTARG" ;;
 
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -19,15 +20,15 @@ while getopts "p:" opt; do
   esac
 done
 
-if [[ -z "$prefix" ]]; then
-  echo "Usage: $0 -p <prefix>" >&2
+if [[ -z "$prefix" || -z "$arpfile" ]]; then
+  echo "Usage: $0 -p <prefix> -a <arpfile>" >&2
   exit 1
 fi
 
 echo "Input ok."
 
 
-arpfile="${prefix}.arp"
+#arpfile="${prefix}.arp"
 
 ## Get where the polymorphic sites are
 # 1. Find the line number with the phrase
