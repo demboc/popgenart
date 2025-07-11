@@ -2,11 +2,19 @@
 
 # Generate the fasta files based on the reference sequence + SNP sequence per sample + SNP loci
 
+# The needed stuff.
+#indices_SNP="${prefix}_indices.txt"
+#ref_seq="${prefix}_tempseq.fa"
+#SNP_csv="${prefix}_SNPseq.csv"
+
 # Check if input is ok
-while getopts "p:" opt; do
+while getopts "p:i:r:s:" opt; do
   case "$opt" in
 
     p) prefix="$OPTARG" ;;
+    i) indices_SNP="$OPTARG" ;;
+    r) ref_seq="$OPTARG" ;;
+    s) SNP_csv="$OPTARG" ;;
 
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -19,8 +27,8 @@ while getopts "p:" opt; do
   esac
 done
 
-if [[ -z "$prefix" ]]; then
-  echo "Usage: $0 -p <prefix>" >&2
+if [[ -z "$prefix" || -z "$indices_SNP" || -z "$ref_seq" || "$SNP_csv" ]]; then
+  echo "Usage: $0 -p <prefix> -i <indices_SNP> -r <ref_seq> -s <SNP_csv>" >&2
   exit 1
 fi
 
@@ -28,10 +36,7 @@ echo "Input ok."
 
 fasta_out="${prefix}.fasta"
 
-# The needed stuff.
-indices_SNP="${prefix}_indices.txt"
-ref_seq="${prefix}_tempseq.fa"
-SNP_csv="${prefix}_SNPseq.csv"
+
 
 echo "" > ${fasta_out}
 
