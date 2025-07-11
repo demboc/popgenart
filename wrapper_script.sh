@@ -57,7 +57,7 @@ echo "dummy reference/ancestral sequence has materialized."
 
 # Parsing the arp file for the SNP sequences (per sample) and loci. 
 chmod +x ./parse_arp.sh
-./parse_arp.sh -p ${prefix} 
+./parse_arp.sh -p ${prefix} -a ${prefix}.arp
 echo "the SNPs and their locations should be available."
 
 # Generating the FASTA file for each sample. 
