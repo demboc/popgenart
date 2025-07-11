@@ -27,7 +27,7 @@ while getopts "p:i:r:s:" opt; do
   esac
 done
 
-if [[ -z "$prefix" || -z "$indices_SNP" || -z "$ref_seq" || "$SNP_csv" ]]; then
+if [[ -z "$prefix" || -z "$indices_SNP" || -z "$ref_seq" || -z "$SNP_csv" ]]; then
   echo "Usage: $0 -p <prefix> -i <indices_SNP> -r <ref_seq> -s <SNP_csv>" >&2
   exit 1
 fi
