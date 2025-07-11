@@ -62,7 +62,8 @@ echo "the SNPs and their locations should be available."
 
 # Generating the FASTA file for each sample. 
 chmod +x ./generatefasta_script.sh
-./generatefasta_script.sh -p ${prefix}
+./generatefasta_script.sh -p ${prefix} -i ${prefix}_indices.txt -r ${prefix}_tempseq.fa -s ${prefix}_SNPseq.csv
 echo "fasta file should be there. go forth!"
+
 
 
