@@ -1,9 +1,6 @@
 #!/bin/bash
 
-# This is a parser script for the input file. 
-
-
-# A way to have this file take in an input. 
+# This is a parser script for the new input format
 
 in_file=""
 prefix=""
@@ -11,10 +8,10 @@ prefix=""
 while getopts "i:p:" opt; do
   case ${opt} in
     i) in_file="$OPTARG" ;;
-    p) prefix="$OPTARG" ;; 
+    p) prefix="$OPTARG" ;;
     \?) echo "Invalid option -$OPTARG" >&2
-   	exit 1
-       	;;
+        exit 1
+        ;;
     :)
       echo "Error: Option -$OPTARG requires an argument." >&2
       exit 1
@@ -36,61 +33,118 @@ fi
 
 echo "You have the required input files, diva!"
 
-#extracting the parameter file. to be outputed AND to be used for the storing of variables
 
+# Get the values to be written for the parameter file. 
 parfile="${prefix}.par"
-awk '/^--EndofParFile--$/ { exit } { print }' ${in_file} > ${parfile} 
 
-# Storing of variables (preliminary, only for 1 population)
-
-# Counter
-i=0
+demes=$(grep "Demes" ${in_file} | awk -F',' '{print $2}')
 
 
-# Storing the variables in a matrix.
-while IFS= read -r line; do
-	[[ "${line}" =~ ^// ]] && continue # Will disregard the comment lines
-	[[ -z "${line}" ]] && continue # Just in case there is an empty line
+if [ -z "$demes" ]; then
+	echo "You did not set the number of populations :<"
+	exit 1
+else
 
-	values[$i]="${line}"
-	((i++))
-done < ${parfile}
-echo "reading .par file ok"
+	# Counts will depend on the number of populations
+	# We will also build the .par file. 
+	par_file="${prefix}.par"
 
-variable_file="${prefix}.csv"
-echo "Parameter,Value" > ${variable_file}
+	echo "//Number of populations" > ${par_file}
+	echo "${demes}" >> ${par_file}
 
-if [[ $i -eq 9 ]]; then
-	# Assign to named variables
-	num_demes="${values[0]}"
-	pop_size="${values[1]}"
-	sample_size="${values[2]}"
-	growth_rate="${values[3]}"
-	no_migration_matrix="${values[4]}"
-	hist_event="${values[5]}"
-	num_chrom="${values[6]}"
-	num_blocks="${values[7]}"
-	locus_params="${values[8]}"
+	# Population size
+	line=$(grep "Pop_Size" ${in_file})
+        values=${line#Pop_Size,}
+	IFS=',' read -r -a pop_size <<< "${values}"
+	echo "//Population effective sizes (number of genes)" >> ${par_file}
+	#echo "${pop_size[@]}" >> ${par_file}
+	for val in "${pop_size[@]}"; do
+    		echo "$val" >> ${par_file}
+	done
 
-	read data_type num_loci rec_rate mut_rate trans_rate <<< ${locus_params}
+	# Sample size
+	line=$(grep "Sample_Size" ${in_file})
+	values=${line#Sample_Size,}
+	IFS=',' read -r -a sample_size <<< "$values"
+	echo "//Sample sizes " >> ${par_file}
+	#echo "${sample_size[@]}"
+	for val in "${sample_size[@]}"; do
+                echo "$val" >> ${par_file}
+        done
+
+
+	line=$(grep "Growth_Rate" ${in_file})
+        values=${line#Growth_Rate,}
+        IFS=',' read -r -a growth_rate <<< "${values}"
+        #echo "${growth_rate[@]}"
+	echo "//Growth rate" >> ${par_file}
+	for val in "${growth_rate[@]}"; do
+                echo "$val" >> ${par_file}
+        done
+
+
+	# Migration events; If 0 -> no migration matrix; if not 0 -> with migration matrix 
+
+	no_migmat=$(grep "No_Migration" ${in_file} | awk -F',' '{print $2}')
+	echo "//Number of migration matrices: 0 implies no migration between demes" >> ${par_file}
+	echo "${no_migmat}" >> ${par_file}
+
+	if [[ ${no_migmat} -ne 0 ]]; then 
+ 		grep "Migration_Matrix" ${in_file} > "temp_migration_file.txt"
+		while read -r line; do 
+			echo "//Migration Matrix" >> ${par_file}
+			line_ed=${line#Migration_Matrix,}
+			IFS=',' read -r -a arr <<< "${line_ed}"
+			for ((i=0; i<${#arr[@]}; i+=2)); do
+				echo "${arr[i]} ${arr[i+1]}" >> ${par_file}
+			done
+		done < "temp_migration_file.txt" 	
+	fi 
+
+	# Historical events; If not 0 -> would have time, source, sink, migrants, new size, new growth rate, migration matrix
+	hist_event=$(grep "Hist_Event" ${in_file} | awk -F',' '{print $2}')
 	
-	echo "Pop_No,${num_demes}" >> ${variable_file}
-       	echo "Pop_Size,${pop_size}" >> ${variable_file}
-	echo "Sample_Size,${sample_size}" >> ${variable_file}
-	echo "Growth_rate,${growth_rate}" >> ${variable_file}
-	echo "No_Migration,${no_migration_matrix}" >> ${variable_file}
-	echo "Hist_Event,${hist_event}" >> ${variable_file}
-	echo "Num_Chrom,${num_chrom}" >> ${variable_file}
-	echo "Num_Blocks,${num_blocks}" >> ${variable_file}
-	echo "Data_Type,${data_type}" >> ${variable_file}
-	echo "No_Loci,${num_loci}" >> ${variable_file}
-	echo "Rec_Rate,${rec_rate}" >> ${variable_file}
-	echo "Mut_Rate,${mut_rate}" >> ${variable_file}
-	echo "Trans_Rate,${trans_rate}"	>> ${variable_file}
+	echo "//Historical event" >> ${par_file}
+	echo "${hist_event}" >> ${par_file}
+
+	if [[ ${hist_event} -ne 0 ]]; then
+		#hist_event_par=$(grep "Hist_Event_Par" ${in_file} | awk -F',' '{print $2}')
+		time=$(grep "Time" ${in_file} | awk -F',' '{print $2}')
+		source_h=$(grep "Source" ${in_file} | awk -F',' '{print $2}')
+		sink=$(grep "Sink" ${in_file} | awk -F',' '{print $2}')
+		migrants=$(grep "Migrants" ${in_file} | awk -F',' '{print $2}')
+		new_size=$(grep "New_Size" ${in_file} | awk -F',' '{print $2}')
+		new_gr=$(grep "New_Growth" ${in_file} | awk -F',' '{print $2}')
+		migr_m=$(grep "H_Migration_M" ${in_file} | awk -F',' '{print $2}')
+		echo "${time} ${source_h} ${sink} ${migrants} ${new_size} ${new_gr} ${migr_m}" >> ${par_file}
+	fi 
+	
+	# Number of independent loci
+	num_chrom=$(grep "Num_Chrom" ${in_file} | awk -F',' '{print $2}')
+	chrom_structure=$(grep "Chrom_Structure" ${in_file} | awk -F',' '{print $2}') #0 or 1 ata? indicates we want to describe different chromosomal structures.
+	echo "//Number of independent loci [chromosome]" >> ${par_file}
+	echo "${num_chrom} ${chrom_structure}" >> ${par_file}
+	
+	# Number of linkage blocks per chromosome
+	num_blocks=$(grep "Num_Blocks" ${in_file} | awk -F',' '{print $2}')
+	echo "//Per chromosome: Number of linkage blocks" >> ${par_file}
+	echo "${num_blocks}" >> ${par_file}
+
+	# Loc params
+	data_type=$(grep "Data_Type" ${in_file} | awk -F',' '{print $2}')
+	num_loci=$(grep "Num_Loci" ${in_file} | awk -F',' '{print $2}')
+	recomb_rate=$(grep "Recomb_Rate" ${in_file} | awk -F',' '{print $2}')
+	mut_rate=$(grep "Mut_Rate" ${in_file} | awk -F',' '{print $2}')
+	trans_rate=$(grep "Trans_Rate" ${in_file} | awk -F',' '{print $2}')
+
+	echo "//per Block: data type, num loci, rec. rate and mut rate + optional parameters" >> ${par_file}
+	echo "${data_type} ${num_loci} ${recomb_rate} ${mut_rate} ${trans_rate}" >> ${par_file}
 
 fi
 
-echo "Made the .par file and csv file containing the parameter values:)"
 
 
-awk '/^--EndofParFile--$/ {found=1; next} found' "${in_file}" >> ${variable_file}
+
+
+
+
