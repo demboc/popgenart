@@ -30,33 +30,27 @@ echo "Input ok."
 
 #arpfile="${prefix}.arp"
 
-## Get where the polymorphic sites are
-# 1. Find the line number with the phrase
-line_num=$(grep -n "polymorphic positions on chromosome" "${arpfile}" | cut -d: -f1)
 
-if [[ -z "$line_num" ]]; then
-  echo "Phrase not found"
-  exit 1
-fi
+indices_array=${prefix}_indices.txt
+echo "" > $indices_array
 
-# 2. Calculate the target line (line_num + 11)
-target_line=$((line_num + 1))
+mapfile -t line_nums < <(grep -n "polymorphic positions on chromosome" "$arpfile" | cut -d: -f1)
 
-# 3. Extract that line from the file
-line=$(sed -n "${target_line}p" "${arpfile}")
+chrom_num=1
+for line_num in "${line_nums[@]}"; do
+	echo "Chrom ---- ${chrom_num}" >> "$indices_array"
+	target_line=$((line_num + 1))
+	line=$(sed -n "${target_line}p" "$arpfile")
+	clean_line=$(echo "$line" | tr -d '#' | xargs)
+	IFS=',' read -ra polyInd <<< "$clean_line"
 
-# 4. Remove '#' characters
-line_no_hash=${line//#/}
-
-# 5. Split by comma and trim spaces, store in an array
-IFS=',' read -ra polyInd <<< "$line_no_hash"
-
-# 6. Trim spaces and print all as integers
-indices_array="${prefix}_indices.txt"
-for i in "${polyInd[@]}"; do
-  # Trim leading/trailing whitespace
-  val=$(echo "$i" | xargs)
-  echo "$val" >> ${indices_array}
+	for i in "${polyInd[@]}"; do
+    		val=$(echo "$i" | xargs)
+    		echo "$val" >> "$indices_array"
+  	done
+	
+	((chrom_num++))
+	
 done
 
 
