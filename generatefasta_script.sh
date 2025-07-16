@@ -35,35 +35,56 @@ fi
 echo "Input ok."
 
 fasta_out="${prefix}.fasta"
+> ${fasta_out}
 
 
+# Parse indices_SNP into an associative array by chromosome
+declare -A snp_indices
+current_chr=""
 
-echo "" > ${fasta_out}
+while read -r line; do
+    if [[ "$line" == Chrom* ]]; then
+	current_chr=$(echo "$line" | awk '{print $3}')  # Extract chromosome number
+        snp_indices["chr${current_chr}"]="" 
 
-#Making the indices.txt file back to array
-mapfile -t polyInd < "${indices_SNP}"
-echo "${polyInd}"
+    elif [[ -n "$line" ]]; then
+	snp_indices["chr${current_chr}"]+="${line},"  # Append with comma for later splitting
+    fi
+done < "$indices_SNP"
 
-tail -n +2 "${SNP_csv}" | while IFS=',' read -r SampleID Col2 Sequence
-do
-        echo ">${SampleID}" >> ${fasta_out}
-	temp_tomodify="temp_tomodify.txt"
-	cat ${ref_seq} > ${temp_tomodify}
+# Read SNP data and modify sequences per sample
+tail -n +2 "$SNP_csv" | while IFS=',' read -r SampleID _ Sequence; do
+    seq_offset=0  # Index offset in the flat SNP string
 
-	for (( i=0; i<${#Sequence}; i++ )); do
-		seq=$(<"${temp_tomodify}")
+    # Process each chromosome
 
-		new_char="${Sequence:$i:1}"
+    for chr_key in "${!snp_indices[@]}"; do
+        echo ">${SampleID} ${chr_key}" >> "$fasta_out"
+	echo $chr_key
+	chr_num=${chr_key#chr}  # Remove prefix
+        # Extract reference sequence for this chromosome
+        ref_seq_chr=$(awk -v chr=">Chromosome ${chr_num}" '
+            $0 == chr {flag=1; next} 
+            /^>/ {flag=0} 
+            flag {print}' "$ref_seq" | tr -d '\n')
 
-		pos=${polyInd[$i]}
-		echo "${pos}"
+        # Get SNP positions as array 
+        IFS=',' read -ra chr_snps <<< "${snp_indices[$chr_key]}"
+        
+        # Modify the reference sequence with SNPs
+        for (( i=0; i<${#chr_snps[@]}; i++ )); do
+            pos=${chr_snps[i]}
+            [[ -z "$pos" ]] && continue  # Skip empty
+            snp_char="${Sequence:$seq_offset:1}"
+            ((seq_offset++))
+            # Modify character at position
+            ref_seq_chr="${ref_seq_chr:0:$pos}${snp_char}${ref_seq_chr:$((pos + 1))}"
+        done
 
-		modified="${seq:0:$pos}${new_char}${seq:$((pos + 1))}"
-		echo "${modified}" > ${temp_tomodify}
+        # Append the modified chromosome sequence
+        echo "$ref_seq_chr" >> "$fasta_out"
+    done
 
-	done
-
-	cat ${temp_tomodify} >> ${fasta_out}
-
-	echo "ok for sample ${SampleID}" 
+    echo "ok for sample ${SampleID}"
 done
+
