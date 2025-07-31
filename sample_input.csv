@@ -47,4 +47,8 @@ Error_Free,No
 Separate_QS,No
 Sequencing_System,HS25
 
+<For Snakemake>
+Prefix,test
+fsc_loc,/home/dembs/.local/bin/fsc28
+art_loc,/home/dembs/.local/bin/art_illumina
 
