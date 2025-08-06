@@ -64,8 +64,19 @@ docker build -t <my-image>
 docker images
 ```
 5. You may now use the image to build the container. The real-time execution of the scripts will be displayed in the terminal.
-   
+   *If the sample_input.csv file is inside the present working directory, run this command:*
+   ```
+   docker run -v “&(pwd)”:/popgen <my-image>
+   ```
 
+   *If the sample_input.csv file is in a different path, use this command:*
+   ```
+   docker run \
+   -v /path/sample_input.csv:/popgen/sample_input.csv \
+   -v “$(pwd)”:/popgen \
+   <my-image>
+   
+   ```
 
 
 
