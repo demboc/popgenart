@@ -9,5 +9,12 @@ To run the pipeline fully in Bash, install the following dependencies:
 
 In your working directory, run this code to clone the GitHub repository containing the scripts:
 ```
-git clone -b main https://github.com/demboc/popgensimwrapper
+git clone -b main https://github.com/demboc/popgensimwrapper popgenART_bash
 ```
+Add execution permission to the wrapper script by running these lines of code:
+```
+cd popgenART_bash
+chmod +x popgenART.sh
+```
+
+
