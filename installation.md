@@ -7,3 +7,7 @@ To run the pipeline fully in Bash, install the following dependencies:
 1. [FastSimCoal2](https://cmpg.unibe.ch/software/fastsimcoal28/)
 2. [ART_Illumina](https://www.niehs.nih.gov/research/resources/software/biostatistics/art)
 
+In your working directory, run this code to clone the GitHub repository containing the scripts:
+```
+git clone -b main https://github.com/demboc/popgensimwrapper
+```
