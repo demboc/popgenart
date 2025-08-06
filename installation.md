@@ -84,7 +84,6 @@ docker images
    -v /path/sample_input.csv:/popgen/sample_input.csv \
    -v “$(pwd)”:/popgen \
    <my-image>
-   
    ```
 
 #### Running a container from popgenART image available in Docker Hub
@@ -92,7 +91,6 @@ docker images
 2. Copy the pull command from the page and paste it onto your terminal.
 ```
 docker pull rcjpenaflorida/popgenart:v1.0.0
-
 ```
 3. Check if you have successfully pulled the Docker image.
 ```
