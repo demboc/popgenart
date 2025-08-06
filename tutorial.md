@@ -20,7 +20,7 @@ The second input file is an editable csv file listing all possible parameters (n
 |Sample size*|Sample_Size| Number of individuals within a specific population||
 |Growth rate*|Growth_Rate|Initial growth rates for population samples (e.g. 0 no growth). Given the current sample size of No , the final population size is calculated based on the growth rate of r in t generations is: $N_t = N_0 e^{rt}$ | 
 |Number of migration matrices|No_Migration||Number should correspond to the number of matrices in the succeeding lines; Can be used only when the number of demes is greater than 1. |
-|Migration Matrix|Migration_Matrix|Details the direction of the migrant from one deme to another. |Example usage:<br>With two demes (deme 0 and 1), the input for the migration matrix<br>Migration_Matrix,0.0,0.0005, 0.0001,0.0<br>Means that deme 0 is sending a migrant backwards in time to deme 1 at a rate of 0.0005. This is given by the first two numbers. Deme 1 is sending migrants to deme 0 at a rate of 0.0001.|
+|Migration Matrix|Migration_Matrix|Details the direction of the migrant from one deme to another. |Example usage:<br><br>With two demes (deme 0 and 1), the input for the migration matrix<br><br>Migration_Matrix,0.0,0.0005, 0.0001,0.0<br><br>Means that deme 0 is sending a migrant backwards in time to deme 1 at a rate of 0.0005. This is given by the first two numbers. Deme 1 is sending migrants to deme 0 at a rate of 0.0001.|
 |Number of historical event| Hist_Event||Number corresponds to the number of historical events; Basis for the number of values required for other parameters with label(**)|
 |Number of generations**|Time|Number of generations prior to the occurrence of the historical event ||
 |Source deme**|Source|Deme that is the source of the migrants|Note that the first deme corresponds to deme 0|
@@ -29,6 +29,32 @@ The second input file is an editable csv file listing all possible parameters (n
 |New size of the sink deme**|New_Size|New size of the sink deme relative to its size at (Time)||
 |New growth rate of the sink deme**|New_Growth|New growth rate of the sink deme ||
 |New migration matrix**|H_Migration_M|New migration matrix to be used further back in time  ||
+|Number of independent chromosomes|Num_Chrom|Indicates prokaryotic (1) or eukaryotic (>1) individuals|Basis for the number of values required for other parameters with label (***)|
+|Chromosome structure|Chrom_Structure|If individuals have >1 chromosomes, these chromosomes can either have different (1) or similar (0) structures.||
+|Number of chromosome segments ***|Num_Blocks|Number of chromosome segments that may differ by the type of markers, recombination rates, etc. |Basis for the number of values required for other parameters with label (****)|
+|Data type ****|Data_Type|Type of genetic marker to be simulated|Current implementation only supports DNA type|
+|Number of markers **** |Num_Loci|Number of marker with the specific data type |For the DNA type, Num_Loci corresponds to the sequence length|
+|Recombination rate ****|Recomb_Rate|Recombination rate between adjacent markers||
+|Mutation rate ****|Mut_Rate||In the case of the DNA type, mutation rate per base pair|
+|Transition rate|Trans_RateFraction of the substitutions that are transitions (purine to purine or pyrimidine to pyrimidine)|Only applicable for DNA type mutation|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
