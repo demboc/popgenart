@@ -66,7 +66,36 @@ echo "" > ${fasta_file}
 echo "Generating the sequence."
 while [ $counter -le ${num_chrom} ];do
 	echo ">Chromosome ${counter}" >> ${fasta_file}
-	hpc r-base:3.6.2 Rscript -e "cat(sample(c('A','T','C','G'), size=${num_loci}, replace=TRUE, prob=c(${AT},${AT},${GC},${GC})), sep='')" >> ${fasta_file}
+
+	declare -a bases
+
+	count_A=$(awk -v p="$AT" 'BEGIN {printf "%.0f", p * 50}')
+	count_T=$count_A
+	count_G=$(awk -v p="$GC" 'BEGIN {printf "%.0f", p * 50}')
+	count_C=$count_G
+
+	#Making a weighted distribution for the bases
+
+	for ((i=0; i<count_A; i++)); do bases+=('A'); done
+	for ((i=0; i<count_T; i++)); do bases+=('T'); done
+	for ((i=0; i<count_G; i++)); do bases+=('G'); done
+	for ((i=0; i<count_C; i++)); do bases+=('C'); done
+
+	while ((${#bases[@]} < num_loci)); do
+  		rand_base=${bases[$((RANDOM % 100))]}
+ 		bases+=("$rand_base")
+	done
+
+	#Generating the sequence
+
+	sequence=""
+	for ((i = 0; i < num_loci; i++)); do
+  		base=${bases[$((RANDOM % ${#bases[@]}))]}
+  		sequence+="$base"
+	done
+
+
+	echo "${sequence}" >> ${fasta_file}
 	echo "" >> ${fasta_file}
 	((counter++))	
 done
