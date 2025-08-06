@@ -106,6 +106,6 @@ docker cp <my-container>:/popgenART <file/path/where/to/store/the/output>
 
 
 <div style="display: flex; justify-content: space-between;">
-  <a href="README.md">← Back to main page</a>
-  <a href="tutorial.ms">Next page (Tutorial) →</a>
+  <a href="READme.md">← Back to main page</a>
+  <a href="tutorial.md">Next page (Tutorial) →</a>
 </div>
