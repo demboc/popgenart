@@ -47,7 +47,7 @@ The second input file is an editable csv file listing all possible parameters (n
 |-----------------|-----------------|-----------------|-----------------|
 |Read length|Read_Length|Length of fragments to be simulated from the reference fasta||
 |Fold coverage|Fold_Coverage|Number of times a fragment is sequenced||
-|Sequencing mode|Sequencing_Mode|Mode of sequencing|Can be:<br><br>**single** - Single-end sequencing <br><br>**paired** - Paired-end sequencing <br><br> **mate-pair** - Mate-pair sequencing|
+|Sequencing mode|Sequencing_Mode|Mode of sequencing|Can be:<br><br>**single** - Single-end sequencing <br>**paired** - Paired-end sequencing <br> **mate-pair** - Mate-pair sequencing|
 
 **Required (for paired-end and mate-pair sequencing modes**
 
@@ -59,11 +59,11 @@ The second input file is an editable csv file listing all possible parameters (n
 **Not required (with default values**
 | Parameter | Parameter name in input file | Description | Additional notes |
 |-----------------|-----------------|-----------------|-----------------|
-|Insertion rate|Insertion_Rate_FR<br><br>Insertion_Rate_SR|First read and second read (* for paired-end or mate-pair only) insertion rates during sequencing by synthesis|Default values:<br><br>Insertion_Rate_FR = 0.00009<br><br>Insertion_Rate_SR = 0.00015|
-|Deletion rate|Deletion_Rate_FR<br><br>Deletion_Rate_SR<br><br>|First read and second read (* for paired-end or mate-pair only) deletion rates during sequencing by synthesisDefault values:<br><br>Deletion_Rate_FR = 0.00011<br><br>Deletion_Rate_SR = 0.00023|
-|Quality score shift|QS_Shift_FR<br><br>QS_Shift_SR|The amount of quality shift for the base scores for the first read and second read (* for paired-end only).<br><br>Error rates are shifted based on this calculation $\frac{1}{10^{\frac{x}{10}}}$, <br><br>Where x is the QS assigned by the user.<br><br>Example:<br><br>A QS shift of 10 means the errors will be reduced to a tenth of the original.|Default values:<br><br>QS_Shift_FR = 0<br><br>QS_Shift_SR = 0 
+|Insertion rate|Insertion_Rate_FR<br><br>Insertion_Rate_SR|First read and second read (* for paired-end or mate-pair only) insertion rates during sequencing by synthesis|Default values:<br><br>Insertion_Rate_FR = 0.00009<br>Insertion_Rate_SR = 0.00015|
+|Deletion rate|Deletion_Rate_FR<br><br>Deletion_Rate_SR<br><br>|First read and second read (* for paired-end or mate-pair only) deletion rates during sequencing by synthesis|Default values:<br><br>Deletion_Rate_FR = 0.00011<br>Deletion_Rate_SR = 0.00023|
+|Quality score shift|QS_Shift_FR<br><br>QS_Shift_SR|The amount of quality shift for the base scores for the first read and second read (* for paired-end only).<br><br>Error rates are shifted based on this calculation $\frac{1}{10^{\frac{x}{10}}}$, <br><br>Where x is the QS assigned by the user.<br><br>Example:<br><br>A QS shift of 10 means the errors will be reduced to a tenth of the original.|Default values:<br><br>QS_Shift_FR = 0<br>QS_Shift_SR = 0 
 |Masking cutoff |Masking_Cutoff|Cutoff ‘N’ frequency in a window size of a read length for masking regions|Default is “1” to mask all regions|
-|Sequencing system|Sequencing_System|Illumina sequencing system with built-in (error) profiles to be used in simulation. |Can be:<br><br>**GA1** - Genome Analyzer I <br><br>**GA2** - Genome Analyzer II<br><br>**HS10** - HiSeq 1000<br><br>**HS20** - HiSeq 2000<br><br>HS25 - HiSeq 2500<br><br>**HSXn** - HiSeqX PCR free<br><br>**HSXt** - HiSeqX TruSeq<br><br>**MinS** - MiniSeq TruSeq<br><br>**MSv1** - MiSeq v1<br><br>**MSv3** - MiSeq v3<br><br>**NS50** - NextSeq500 v2 |
+|Sequencing system|Sequencing_System|Illumina sequencing system with built-in (error) profiles to be used in simulation. |Can be:<br><br>**GA1** - Genome Analyzer I<br>**GA2** - Genome Analyzer II<br>**HS10** - HiSeq 1000<br>**HS20** - HiSeq 2000<br>HS25 - HiSeq 2500<br>**HSXn** - HiSeqX PCR free<br>**HSXt** - HiSeqX TruSeq<br>**MinS** - MiniSeq TruSeq<br>**MSv1** - MiSeq v1<br>**MSv3** - MiSeq v3<br>**NS50** - NextSeq500 v2 |
 |SAM file|SAM_File|Indicate if SAM file would be generated|“Yes” or “No”|
 |Alignment (Aln) file|Alignment_File|Indicate if alignment file would be generated|“Yes” or “No”|
 |Error Free|Error_Free|Used to generate a SAM file with zero sequencing error along with the other files with the incorporated errors.|“Yes” or “No”|
@@ -72,7 +72,7 @@ The second input file is an editable csv file listing all possible parameters (n
 #### Additional parameters
 | Parameter | Parameter name in input file | Description | Additional notes |
 |-----------------|-----------------|-----------------|-----------------|
-|GC content|GC_Con|Proportion of GC in the genome to be simulated|Required in decimal notation (*e.g.*0.5)|
+|GC content|GC_Con|Proportion of GC in the genome to be simulated|Required in decimal notation (e.g.0.5)|
 
 
 To further explore fastsimcoal2 and art_illumina, the user can also refer to the following documentations:
