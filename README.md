@@ -6,8 +6,7 @@
 ### Install Dependencies:
 1. FastSimCoal2 (https://cmpg.unibe.ch/software/fastsimcoal28/)
 2. art_illumina (https://www.niehs.nih.gov/research/resources/software/biostatistics/art)
-3. R (https://www.r-project.org/)
-4. Miniforge  (https://github.com/conda-forge/miniforge)
+3. Miniforge  (https://github.com/conda-forge/miniforge)
 
 --- 
 
