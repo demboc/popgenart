@@ -13,8 +13,8 @@
 
 ## Table of Contents 
 - [Introduction](#Introduction)
-- [Installation: Bash]()
-- [Tutorial]()
+- [Installation](installation.md)
+- [Tutorial](tutorial.md)
 
 ## Introduction
 
