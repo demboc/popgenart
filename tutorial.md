@@ -49,14 +49,14 @@ The second input file is an editable csv file listing all possible parameters (n
 |Fold coverage|Fold_Coverage|Number of times a fragment is sequenced||
 |Sequencing mode|Sequencing_Mode|Mode of sequencing|Can be:<br><br>**single** - Single-end sequencing <br>**paired** - Paired-end sequencing <br> **mate-pair** - Mate-pair sequencing|
 
-**Required (for paired-end and mate-pair sequencing modes**
+**Required (for paired-end and mate-pair sequencing modes)**
 
 | Parameter | Parameter name in input file | Description | Additional notes |
 |-----------------|-----------------|-----------------|-----------------|
 |Mean fragment size|Mean_Frag_Size|Mean size of the insert (stretch of DNA sequence between the two reads)|For paired-end and mate-pair sequencing modes only<br><br>Note: If >2000 automatically changes the sequencing mode to mate-pair sequencing|
 |Standard deviation of fragment sizes|Stdv_Frag_Size|Standard deviation of the insert sizes|For paired-end and mate-pair sequencing modes only|
 
-**Not required (with default values**
+**Not required (with default values)**
 | Parameter | Parameter name in input file | Description | Additional notes |
 |-----------------|-----------------|-----------------|-----------------|
 |Insertion rate|Insertion_Rate_FR<br><br>Insertion_Rate_SR|First read and second read (* for paired-end or mate-pair only) insertion rates during sequencing by synthesis|Default values:<br><br>Insertion_Rate_FR = 0.00009<br>Insertion_Rate_SR = 0.00015|
