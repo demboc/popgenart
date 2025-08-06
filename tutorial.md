@@ -15,7 +15,8 @@ The second input file is an editable csv file listing all possible parameters (n
 
 | Parameter | Parameter name in input file | Description | Additional notes |
 |-----------------|-----------------|-----------------|-----------------|
-| Number of population samples | Demes | Number of populations to be simulated; Natural number (1,2,3,...) |
-Basis for the number of values required for other parameters with label (*)|
+| Number of population samples | Demes | Number of populations to be simulated; Natural number (1,2,3,...) |Basis for the number of values required for other parameters with label (*)|
+|Population effective size*|Pop_Size|Number of genes present in a population ||
+
 
 
