@@ -1,5 +1,4 @@
 **popgenART** 
-
                ┌──●            popgenART           ●──┐
             ┌──●──┐     Wrapper for PopGen SR Sim  ┌──●──┐
         ┌──●───●──●──┐     Simulation Log v1.0.0   ┌──●───●──●──┐
