@@ -27,6 +27,7 @@ chmod +x popgenART.sh
 
 ### Snakemake
 
+For detailed use of the Snakemake version of this tool, please head to the snakemake-workflow branch.  
 To set up Snakemake, follow the following instructions:
 
 Install Dependencies:
