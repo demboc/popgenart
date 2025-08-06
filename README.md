@@ -1,5 +1,5 @@
 # popgenART Snakemake Workflow
-### If you prefer to run the wrapper with snakemake, you may follow the instructions below:
+### If you prefer to run the wrapper with Snakemake, you may follow the instructions below:
 
 --- 
 
