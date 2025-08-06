@@ -16,5 +16,11 @@
 The following flowchart illustrates the steps involved in popgenART.
 ![Flowchart](flowchart.png)
 
+## Table of Contents 
+- [Introduction](READme.md)
+- [Installation: Bash]()
+- [Tutorial]()
+  
+
 
 
