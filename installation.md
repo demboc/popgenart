@@ -94,8 +94,8 @@ docker images
 ```
 docker run \
  --name <my-container> \
--v /path/sample_input.csv:/popgenART/sample_input.csv \ 
-rcjpenaflorida/popgenart:v1.0.0
+ -v /path/sample_input.csv:/popgenART/sample_input.csv \ 
+ rcjpenaflorida/popgenart:v1.0.0
 ```
 5. To extract the output files, create a folder in your machine. Run this in the terminal:
 ```
@@ -105,7 +105,7 @@ docker cp <my-container>:/popgenART <file/path/where/to/store/the/output>
 
 
 
-
-
-
-
+<div style="display: flex; justify-content: space-between;">
+  <a href="README.md">← Back to main page</a>
+  <a href="tutorial.ms">Next page (Tutorial) →</a>
+</div>
