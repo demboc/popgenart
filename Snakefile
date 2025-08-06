@@ -1,4 +1,7 @@
-# Snakefile
+# Snakefile for popgenART
+
+# This Snakefile orchestrates the workflow for simulating population genetics data using fastsimcoal2 and ART.
+# For detailed instructions on how to run this pipeline, refer to the README.md file in the repository.
 
 import csv
 
@@ -17,6 +20,7 @@ sequencing_mode = config_data.get("Sequencing_Mode", "paired").strip().lower()
 is_paired = sequencing_mode in ("paired", "matepair")
 fsc_loc = config_data.get("fsc_loc")
 art_loc = config_data.get("art_loc")
+input_file = config_data.get("input_file")
 
 # Rule to define final outputs (must exist after a successful run)
 rule all:
@@ -47,14 +51,22 @@ rule chmod_scripts:
 # Rule to generate .par file from input CSV
 rule generate_par_file:
     input:
-        csv="sample_input.csv"
+        csv=input_file
     output:
         par=f"{prefix}.par"
     params:
         prefix=prefix
     shell:
         """
-        scripts/parser_script.sh {input} {params.prefix}
+        scripts/parser_script.sh -i {input} -p {params.prefix}
+        if [[ -f {output} ]]; then
+            echo "File {output} created."
+        else
+            echo "Error: Parsing unsuccessful."
+            exit 1
+        fi
+
+        echo "Parsing complete."
         """
 
 # Rule to run fastsimcoal to generate .arp file
@@ -70,19 +82,34 @@ rule run_fsc:
         """
         {params.fsc_loc} -i {input} -n1
         mv {params.prefix}/*.arp {output}
+        if [[ -f {output} ]]; then
+            echo "File {output} created."
+        else
+            echo "Error: Fastsimcoal2 unsuccesful."
+            exit 1
+        fi
+        echo "SNP sites per sample have been generated."
+        echo "File saved as {output}"
         """
 
 # Rule to generate dummy reference sequence
 rule generate_dummy_sequence:
     input:
-        csv="sample_input.csv"
+        csv=input_file
     output:
         fasta=f"{prefix}_tempseq.fa"
     params:
         prefix=prefix
     shell:
         """
-        scripts/dummygen_script.sh {input} {params.prefix}
+        scripts/dummygen_script.sh -c {input} -p {params.prefix}
+        if [[ -f {output} ]]; then
+            echo "File {output} created."
+        else
+            echo "Error: No reference sequence generated."
+            exit 1
+        fi
+        echo "Reference sequence has been generated and saved at {output}"
         """
 
 # Rule to parse .arp file from run_fsc to get indices and SNP data
@@ -96,22 +123,37 @@ rule parse_arp:
         prefix=prefix
     shell:
         """
-        scripts/parse_arp.sh {params.prefix} {input}
+        scripts/parse_arp.sh -p {params.prefix} -a {input}
+        if [[ -f {output.snps} && -f {output.indices} ]]; then
+            echo "SNPs are saved in {output.snps}"
+	        echo "Locations of SNPs saved in {output.indices}"
+        else
+            echo "Error: SNPs and/or locations not saved."
+            exit 1
+        fi
+        echo "Parsing of arlequin file completed."
         """
 
 # Rule to generate final simulated population data in .fasta
 rule generate_fasta:
     input:
-        f"{prefix}_indices.txt",
-        f"{prefix}_tempseq.fa",
-        f"{prefix}_SNPseq.csv"
+        indices=f"{prefix}_indices.txt",
+        tempseq=f"{prefix}_tempseq.fa",
+        SNPcsv=f"{prefix}_SNPseq.csv"
     output:
         f"{prefix}.fasta"
     params:
         prefix=prefix
     shell:
         """
-        scripts/generatefasta_script.sh {params.prefix} {input}
+        scripts/generatefasta_script.sh -p {params.prefix} -i {input.indices} -r {input.tempseq} -s {input.SNPcsv}
+        if [[ -f {output} ]]; then
+            echo "File {output} created."
+        else
+            echo "Error: Sequences per sample not generated."
+            exit 1
+        fi
+        echo "Simulated genomes per sample are stored in {output}"
         """
 
 # Rule to simulate paired-end reads or single-end reads in art_illumina

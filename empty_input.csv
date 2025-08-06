@@ -1,19 +1,19 @@
 Parameter,Value
 
-Demes,1
-Pop_Size,20000
-Sample_Size,10
-Growth_Rate,0
-No_Migration,0
+Demes,
+Pop_Size,
+Sample_Size,
+Growth_Rate,
+No_Migration,
 Migration_Matrix,
-Hist_Event,1
-Time_1,70000
-Source_1,0
-Sink_1,1
-Migrants_1,1
-New_Size_1,1
-New_Growth_1,0
-H_Migration_M_1,0
+Hist_Event,
+Time_1,
+Source_1,
+Sink_1,
+Migrants_1,
+New_Size_1,
+New_Growth_1,
+H_Migration_M_1,
 Time_2,
 Source_2,
 Sink_2,
@@ -22,10 +22,10 @@ New_Size_2,
 New_Growth_2,
 H_Migration_M_2,
 
-Num_Chrom,1
-Chrom_Structure,0
-Num_Blocks_1,1
-Num_Blocks_2,1
+Num_Chrom,
+Chrom_Structure,
+Num_Blocks_1,
+Num_Blocks_2,
 
 Data_Type_1a,DNA
 Num_Loci_1a,10000
@@ -33,11 +33,11 @@ Recomb_Rate_1a,0
 Mut_Rate_1a,0.0000002
 Trans_Rate_1a,0.33
 
-Data_Type_1b,DNA
-Num_Loci_1b,1000
-Recomb_Rate_1b,1e-8
-Mut_Rate_1b,2.2e-8
-Trans_Rate_1b,0.02
+Data_Type_1b,
+Num_Loci_1b,
+Recomb_Rate_1b,
+Mut_Rate_1b,
+Trans_Rate_1b,
 
 <EndOfParFile>
 
@@ -65,7 +65,7 @@ Separate_QS,No
 Sequencing_System,HS25
 
 <For Snakemake>
-Prefix,defaultprefix
+Prefix,
 fsc_loc,/home/user/.local/bin/fsc28
 art_loc,/home/user/.local/bin/art_illumina
-input_file,/home/user/popgenart/sample_input.csv
+input_file,/home/user/popgenart_snakemake/sample_input.csv

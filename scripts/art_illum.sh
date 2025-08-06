@@ -83,7 +83,7 @@ fi
 
 seq_system=$(grep "Sequencing_System" "$inloc" | awk -F',' '{print $2}')
 if [[ -n "$seq_system" ]]; then
-  if [[ "$seq_system" =~ ^(GA1|GA2|HS25|HS10|HS20|MS)$ ]]; then
+  if [[ "$seq_system" =~ ^(GA1|GA2|HS25|HS10|HS20|HSXn|HSXt|MinS|MSv1|MSv3|NS50)$ ]]; then
     art_illum_line+=" -ss ${seq_system}"
   else
     echo "Error: Invalid seq_system: $seq_system"
