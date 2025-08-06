@@ -17,4 +17,31 @@ cd popgenART_bash
 chmod +x popgenART.sh
 ```
 
+### Snakemake
+
+To set up Snakemake, follow the following instructions:
+
+Install Dependencies:
+1. [FastSimCoal2](https://cmpg.unibe.ch/software/fastsimcoal28/)
+2. [ART_illumina](https://www.niehs.nih.gov/research/resources/software/biostatistics/art)
+3. [Miniforge](https://github.com/conda-forge/miniforge)
+
+Clone the Snakemake repository and change the current working directory by running the following lines of code:
+```
+git clone -b snakemake-workflow https://github.com/demboc/popgensimwrapper popgenART_snakemake
+cd popgenART_snakemake
+```
+
+Setup a Conda environment
+1. Assuming you have all the dependencies installed, create a custom environment for this wrapper via:
+```
+conda create -n popgenART snakemake -c bioconda -c conda-forge
+```
+2. Activate the environment.
+```
+conda activate popgenART
+```
+3. You can now safely run this wrapper in this isolated snakemake environment.
+
+
 
