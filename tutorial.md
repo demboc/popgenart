@@ -57,6 +57,26 @@ The second input file is an editable csv file listing all possible parameters (n
 |Standard deviation of fragment sizes|Stdv_Frag_Size|Standard deviation of the insert sizes|For paired-end and mate-pair sequencing modes only|
 
 **Not required (with default values**
+| Parameter | Parameter name in input file | Description | Additional notes |
+|-----------------|-----------------|-----------------|-----------------|
+|Insertion rate|Insertion_Rate_FR<br><br>Insertion_Rate_SR|First read and second read (* for paired-end or mate-pair only) insertion rates during sequencing by synthesis|Default values:<br><br>Insertion_Rate_FR = 0.00009<br><br>Insertion_Rate_SR = 0.00015|
+|Deletion rate|Deletion_Rate_FR<br><br>Deletion_Rate_SR<br><br>|First read and second read (* for paired-end or mate-pair only) deletion rates during sequencing by synthesisDefault values:<br><br>Deletion_Rate_FR = 0.00011<br><br>Deletion_Rate_SR = 0.00023|
+|Quality score shift|QS_Shift_FR<br><br>QS_Shift_SR|The amount of quality shift for the base scores for the first read and second read (* for paired-end only).<br><br>Error rates are shifted based on this calculation $/frac{1}{10^{/frac{x}{10}}}$
+
+Where x is the QS assigned by the user.
+
+Example:
+A QS shift of 10 means the errors will be reduced to a tenth of the original.
+Default values:
+
+QS_Shift_FR = 0
+QS_Shift_SR = 0 
+
+
+
+
+
+
 
 
 
