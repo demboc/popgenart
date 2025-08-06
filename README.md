@@ -1,4 +1,4 @@
-**popgenART** 
+# popgenART
 <div align="center">
 <pre>
                ┌──●          popgenART             ●──┐
