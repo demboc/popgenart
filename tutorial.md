@@ -19,4 +19,30 @@ The second input file is an editable csv file listing all possible parameters (n
 |Population effective size*|Pop_Size|Number of genes present in a population ||
 |Sample size*|Sample_Size| Number of individuals within a specific population||
 |Growth rate*|Growth_Rate|Initial growth rates for population samples (e.g. 0 no growth). Given the current sample size of No , the final population size is calculated based on the growth rate of r in t generations is: $N_t = N_0 e^{rt}$ | 
+|Number of migration matrices|No_Migration||Number should correspond to the number of matrices in the succeeding lines; Can be used only when the number of demes is greater than 1. |
+|Migration Matrix|Migration_Matrix|Details the direction of the migrant from one deme to another. |Example usage:<br>With two demes (deme 0 and 1), the input for the migration matrix<br>Migration_Matrix,0.0,0.0005, 0.0001,0.0<br>Means that deme 0 is sending a migrant backwards in time to deme 1 at a rate of 0.0005. This is given by the first two numbers. Deme 1 is sending migrants to deme 0 at a rate of 0.0001.|
+|Number of historical event| Hist_Event||Number corresponds to the number of historical events; Basis for the number of values required for other parameters with label(**)|
+|Number of generations**|Time|Number of generations prior to the occurrence of the historical event ||
+|Source deme**|Source|Deme that is the source of the migrants|Note that the first deme corresponds to deme 0|
+|Sink deme**|Sink|Deme to which the individuals will migrate|Note that the first deme corresponds to deme 0|
+|Number of migrants**|Migrants|Expected number of migrants moving from source to sink deme||
+|New size of the sink deme**|New_Size|New size of the sink deme relative to its size at (Time)||
+|New growth rate of the sink deme**|New_Growth|New growth rate of the sink deme ||
+|New migration matrix**|H_Migration_M|New migration matrix to be used further back in time  ||
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
