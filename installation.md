@@ -105,7 +105,7 @@ docker cp <my-container>:/popgenART <file/path/where/to/store/the/output>
 
 
 
-]<table width="100%">
+<table width="100%">
   <tr>
     <td align="left"><a href="READme.md">← Back to main page</a></td>
     <td align="right"><a href="tutorial.md">Next page (Tutorial) →</a></td>
