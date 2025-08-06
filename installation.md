@@ -6,8 +6,8 @@ Installation of popgenART can be done in three ways as will be outlined below. U
 - [Bash](#Bash)
 - [Snakemake](#Snakemake)
 - [Docker](#Docker)
-  - [From Scratch](#Creating a Docker image and container from scratch)
-  - [Running container](#Running a container from popgenART image available in Docker Hub)
+  - [From Scratch](#Creating-a-Docker-image-and-container-from-scratch)
+  - [Running container](#Running-a-container-from-popgenART-image-available-in-Docker-Hub)
 
 
 ### Bash
