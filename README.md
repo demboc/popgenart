@@ -27,10 +27,10 @@ You can now safely run this wrapper in this isolated snakemake environment.
 Open empty_input.csv in a text editor. This csv file holds both simulation parameters and the tool paths. You may change the name of this file into something you can easily remember. Make sure to scroll down to the <For Snakemake> section and set:
 
 Field,Parameter  
-Prefix,default (change to desired name for your run)  
-fsc_loc,/path/to/fastsimcoal2 (change to full path to your working fastsimcoal2 executable)  
-art_loc,/path/to/art_illumina (change to full path to your working art_illumina executable)  
-input_file,/path/to/empty_input.csv (change to full path to your input .csv file)
+Prefix,default *(change to desired name for your run)*  
+fsc_loc,/path/to/fastsimcoal2 *(change to full path to your working fastsimcoal2 executable)*  
+art_loc,/path/to/art_illumina *(change to full path to your working art_illumina executable)*  
+input_file,/path/to/empty_input.csv *(change to full path to your input .csv file)*
 
 Example:
 Prefix,test_run  
