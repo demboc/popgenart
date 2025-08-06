@@ -1,13 +1,17 @@
-If you prefer to run the wrapper with snakemake, you may follow the instructions below:
+# popgenART Snakemake Workflow
+### If you prefer to run the wrapper with snakemake, you may follow the instructions below:
 
-Install Dependencies:
+--- 
+
+### Install Dependencies:
 1. FastSimCoal2 (https://cmpg.unibe.ch/software/fastsimcoal28/)
 2. art_illumina (https://www.niehs.nih.gov/research/resources/software/biostatistics/art)
 3. R (https://www.r-project.org/)
 4. Miniforge  (https://github.com/conda-forge/miniforge)
 
+--- 
 
-Set up a Conda Environment:
+### Set up a Conda Environment:
 Assuming you have all the dependencies installed, create a custom environment for this wrapper via:
 
 	conda create -n popgenART snakemake -c bioconda -c conda-forge
@@ -18,7 +22,9 @@ Activate it with:
 
 You can now safely run this wrapper in this isolated snakemake environment.
 
-Prepare Your Input File:
+---
+
+### Prepare Your Input File:
 Open empty_input.csv in a text editor. This csv file holds both simulation parameters and the tool paths. You may change the name of this file into something you can easily remember. Make sure to scroll down to the <For Snakemake> section and set:
 
 Field,Parameter
@@ -35,15 +41,18 @@ input_file,/home/user/popgenart_snakemake/sample_input.csv
 
 A sample input file has been provided to you in the repository for you to try running the tool with.
 
-Running the Workflow:
+---
+
+### Running the Workflow:
 Once your input file and environment is ready, run:
 
-snakemake --cores N
+	snakemake --cores N
 
 Replace N with the number of CPU cores you want to allocate to the pipeline.
 
+---
 
-Output:
+### Output:
 After a successful run, Snakemake will create:
 
 1. results/ - contains simulated Illumina sequencing files (*.fq, *.sam, *.aln)
