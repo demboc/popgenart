@@ -36,7 +36,33 @@ The second input file is an editable csv file listing all possible parameters (n
 |Number of markers **** |Num_Loci|Number of marker with the specific data type |For the DNA type, Num_Loci corresponds to the sequence length|
 |Recombination rate ****|Recomb_Rate|Recombination rate between adjacent markers||
 |Mutation rate ****|Mut_Rate||In the case of the DNA type, mutation rate per base pair|
-|Transition rate|Trans_RateFraction of the substitutions that are transitions (purine to purine or pyrimidine to pyrimidine)|Only applicable for DNA type mutation|
+|Transition rate|Trans_Rate|Fraction of the substitutions that are transitions (purine to purine or pyrimidine to pyrimidine)|Only applicable for DNA type mutation|
+
+
+#### Parameters for ART_Illumina
+
+**Required (for all sequencing mode)**
+
+| Parameter | Parameter name in input file | Description | Additional notes |
+|-----------------|-----------------|-----------------|-----------------|
+|Read length|Read_Length|Length of fragments to be simulated from the reference fasta||
+|Fold coverage|Fold_Coverage|Number of times a fragment is sequenced||
+|Sequencing mode|Sequencing_Mode|Mode of sequencing|Can be:<br><br>**single** - Single-end sequencing <br><br>**paired** - Paired-end sequencing <br><br> **mate-pair** - Mate-pair sequencing|
+
+**Required (for paired-end and mate-pair sequencing modes**
+
+| Parameter | Parameter name in input file | Description | Additional notes |
+|-----------------|-----------------|-----------------|-----------------|
+|Mean fragment size|Mean_Frag_Size|Mean size of the insert (stretch of DNA sequence between the two reads)|For paired-end and mate-pair sequencing modes only<br><br>Note: If >2000 automatically changes the sequencing mode to mate-pair sequencing|
+|Standard deviation of fragment sizes|Stdv_Frag_Size|Standard deviation of the insert sizes|For paired-end and mate-pair sequencing modes only|
+
+**Not required (with default values**
+
+
+
+
+
+
 
 
 
