@@ -17,6 +17,6 @@ The second input file is an editable csv file listing all possible parameters (n
 |-----------------|-----------------|-----------------|-----------------|
 | Number of population samples | Demes | Number of populations to be simulated; Natural number (1,2,3,...) |Basis for the number of values required for other parameters with label (*)|
 |Population effective size*|Pop_Size|Number of genes present in a population ||
-
-
+|Sample size*|Sample_Size| Number of individuals within a specific population||
+|Growth rate*|Growth_Rate|Initial growth rates for population samples (e.g. 0 no growth). Given the current sample size of No , the final population size is calculated based on the growth rate of r in t generations is: $N_t = N_0 e^{rt}$ | 
 
