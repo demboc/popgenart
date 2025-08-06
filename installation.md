@@ -48,7 +48,7 @@ conda activate popgenART
 1. Create an account in [Docker cloud](https://hub.docker.com/) or install [Docker-Desktop](https://www.docker.com/products/docker-desktop/) for Windows. Ensure that your machine uses Linux or a subsystem equivalent to it.  
 2. Other dependencies (i.e., Fastsimcoal2 and ART_illumina) required for running the program are already packaged in the Dockerfile. **You no longer need to install these**.
 
-**Creating a Docker image and container from scratch**
+#### Creating a Docker image and container from scratch
 1. Download scripts in https://github.com/demboc/popgensimwrapper.git >docker-image-to-container.
 ```
 git clone -b docker-image-to-container https://github.com/demboc/popgensimwrapper
@@ -64,6 +64,7 @@ docker build -t <my-image>
 docker images
 ```
 5. You may now use the image to build the container. The real-time execution of the scripts will be displayed in the terminal.
+   
    *If the sample_input.csv file is inside the present working directory, run this command:*
    ```
    docker run -v “&(pwd)”:/popgen <my-image>
@@ -77,6 +78,31 @@ docker images
    <my-image>
    
    ```
+
+#### Running a container from popgenART image available in Docker Hub.
+1. Go to Docker Hub and search for [rcjpenaflorida/popgenart repository](https://hub.docker.com/r/rcjpenaflorida/popgenart).
+2. Copy the pull command from the page and paste it onto your terminal.
+```
+docker pull rcjpenaflorida/popgenart:v1.0.0
+
+```
+3. Check if you have successfully pulled the Docker image.
+```
+docker images
+```
+4. In running the image, you need to specify the name of the container and the location of the sample_input.csv file containing the parameters that you can change for the simulation. Do not modify the file name.
+```
+docker run \
+ --name <my-container> \
+-v /path/sample_input.csv:/popgenART/sample_input.csv \ 
+rcjpenaflorida/popgenart:v1.0.0
+```
+5. To extract the output files, create a folder in your machine. Run this in the terminal:
+```
+docker cp <my-container>:/popgenART <file/path/where/to/store/the/output>
+```
+6. The folder should contain the output files. 
+
 
 
 
