@@ -80,6 +80,8 @@ To further explore fastsimcoal2 and art_illumina, the user can also refer to the
 2. [Fastsimcoal2 manual (PDF)](https://cmpg.unibe.ch/software/fastsimcoal2-25221/man/fastsimcoal25.pdf)
 
 
+| [← Back to main page](./README.md) | [Prev page (Installation) →](./installation.md) |
+|:----------------------------------|-----------------------------------------:|
 
 
 
