@@ -4,6 +4,6 @@ Installation of popgenART can be done in three ways as will be outlined below. U
 
 ### Bash
 To run the pipeline fully in Bash, install the following dependencies:
-1. FastSimCoal2 (https://cmpg.unibe.ch/software/fastsimcoal28/
-2. ART_Illumina (https://www.niehs.nih.gov/research/resources/software/biostatistics/art)
+1. [FastSimCoal2](https://cmpg.unibe.ch/software/fastsimcoal28/)
+2. [ART_Illumina](https://www.niehs.nih.gov/research/resources/software/biostatistics/art)
 
