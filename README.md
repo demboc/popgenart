@@ -54,6 +54,6 @@ Replace N with the number of CPU cores you want to allocate to the pipeline.
 ### Output:
 After a successful run, Snakemake will create:
 
-1. results/ - contains simulated Illumina sequencing files (*.fq, *.sam, *.aln)
-2. intermediate_files/ - contains intermediate data used in the run (e.g., .fasta, .arp, .par, etc.)
+1. {prefix}/results/ - contains simulated Illumina sequencing files (*.fq, *.sam, *.aln)
+2. {prefix}/intermediate_files/ - contains intermediate data used in the run (e.g., .fasta, .arp, .par, etc.)
 3. logs for each rule, stored in .snakemake/log
