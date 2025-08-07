@@ -33,6 +33,11 @@ if [[ -z "$input_file" || -z "$prefix" || -z "${fsc_loc}" || -z "${art_loc}" ]];
   exit 1
 fi
 
+if [ -d "${prefix}" ]; then
+  echo "Directory ${prefix} already exists. Change the profix name."
+  exit 1
+fi
+
 
 exec > ${prefix}_wrapper.log 2>&1
 
@@ -158,5 +163,10 @@ mv *fq ${prefix}_resultfiles
 mv *aln ${prefix}_resultfiles
 mv *sam ${prefix}_resultfiles
 
-echo "Result files from sample genome simulation and ART_illumina simulation are stored in the folder ${prefix}_resultfiles"
+mkdir ${prefix}
+mv ${prefix}_tempfiles ${prefix}_inputfiles ${prefix}_resultfiles ${prefix}
+mv ${prefix}_wrapper.log ${prefix}
 
+echo "Result files from sample genome simulation and ART_illumina simulation are stored in the folder ./${prefix}/${prefix}_resultfiles"
+
+echo "Result files from sample genome simulation and ART_illumina simulation are stored in the folder ./${prefix}/${prefix}_resultfiles. Log file stored in ./${prefix}" > /dev/tty
