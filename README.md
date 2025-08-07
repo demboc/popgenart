@@ -1,7 +1,7 @@
 # popgenART
 <div align="center">
 <pre>
-               ┌──●          popgenART            ●──┐
+               ┌──●          popgenART           ●──┐
             ┌──●──┐     Wrapper for PopGen SR Sim  ┌──●──┐
         ┌──●───●──●──┐                             ┌──●───●──●──┐
         │  └──┬──┬┘                                   └─┬─┬──┘  │
