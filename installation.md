@@ -37,7 +37,7 @@ Install Dependencies:
 
 Clone the Snakemake repository and change the current working directory by running the following lines of code:
 ```
-git clone -b snakemake-workflow https://github.com/demboc/popgensimwrapper popgenART_snakemake
+git clone -b snakemake-workflow https://github.com/demboc/popgenart popgenART_snakemake
 cd popgenART_snakemake
 ```
 
