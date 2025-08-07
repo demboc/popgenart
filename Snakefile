@@ -4,6 +4,9 @@
 # For detailed instructions on how to run this pipeline, refer to the README.md file in the repository.
 
 import csv
+import os
+import sys 
+
 
 # Load CSV config into dictionary
 config_data = {}
@@ -21,6 +24,20 @@ is_paired = sequencing_mode in ("paired", "matepair")
 fsc_loc = config_data.get("fsc_loc")
 art_loc = config_data.get("art_loc")
 input_file = config_data.get("input_file")
+
+# Check for prefix reuse
+existing_files = [
+    f"{prefix}/results",
+    f"{prefix}/intermediate_files"
+]
+
+conflicting = [f for f in existing_files if os.path.exists(f)]
+
+if conflicting:
+    print(f"\nERROR: The prefix '{prefix}' already has already been used in a previous successful run.")
+    print("Please use a different prefix in sample_input.csv to avoid overwriting.\n")
+    sys.exit(1)
+
 
 # Rule to define final outputs (must exist after a successful run)
 rule all:
@@ -47,6 +64,7 @@ rule chmod_scripts:
         chmod +x {input}
         touch {output}
         """
+        
 
 # Rule to generate .par file from input CSV
 rule generate_par_file:
