@@ -26,8 +26,8 @@ input_file = config_data.get("input_file")
 rule all:
     input:
         "scripts_ready.flag",
-        f"results/{prefix}/.organized",
-        f"intermediate_files/{prefix}/.organized"
+        f"{prefix}/results/.organized",
+        f"{prefix}/intermediate_files/.organized"
 
 
 # Rule to ensure all scripts are executable with permissions
@@ -197,24 +197,24 @@ rule organize_files:
     input:
         flag=f"{prefix}.sam"
     output:
-        results_flag=f"results/{prefix}/.organized",
-        intermediate_flag=f"intermediate_files/{prefix}/.organized"
+        results_flag=f"{prefix}/results/.organized",
+        intermediate_flag=f"{prefix}/intermediate_files/.organized"
     shell:
         """
-        mkdir -p results/{prefix}
-        mkdir -p intermediate_files/{prefix}
+        mkdir -p {prefix}/results
+        mkdir -p {prefix}/intermediate_files
         shopt -s nullglob
-        mv *.fq results/{prefix}/
-        mv *.aln results/{prefix}/
-        mv *.sam results/{prefix}/
-        mv *.arp intermediate_files/{prefix}/
-        mv *.fasta intermediate_files/{prefix}/
-        mv *.par intermediate_files/{prefix}/
-        mv *.fa intermediate_files/{prefix}/
-        mv *indices.txt intermediate_files/{prefix}/
-        mv *seed.txt intermediate_files/{prefix}/
-        mv *SNPseq.csv intermediate_files/{prefix}/
-        rm {prefix}/*.arb {prefix}/*.simparam
-        rmdir {prefix}
+        mv *.fq {prefix}/results/
+        mv *.aln {prefix}/results/
+        mv *.sam {prefix}/results/
+        mv *.arp {prefix}/intermediate_files/
+        mv *.fasta {prefix}/intermediate_files/
+        mv *.par {prefix}/intermediate_files/
+        mv *.fa {prefix}/intermediate_files/
+        mv *indices.txt {prefix}/intermediate_files/
+        mv *seed.txt {prefix}/intermediate_files/
+        mv *SNPseq.csv {prefix}/intermediate_files/
+        mv {prefix}/*.arb {prefix}/intermediate_files/
+        mv {prefix}/*.simparam {prefix}/intermediate_files/
         touch {output.results_flag} {output.intermediate_flag}
         """
