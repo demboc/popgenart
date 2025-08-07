@@ -105,7 +105,7 @@ echo "Reference sequence has been generated and saved at ${prefix}_tempseq.fa"
 
 # Parsing the arp file for the SNP sequences (per sample) and loci.
 echo "The arlequin file will be parsed for the the SNP sequences and loci."
-chmod +x ./parse_arp.sh
+chmod +x parse_arp.sh
 ./parse_arp.sh -p ${prefix} -a ${prefix}.arp
 if [[ -f "${prefix}_SNPseq.csv" && -f "${prefix}_indices.txt" ]]; then
         echo "SNPs are saved in ${prefix}_SNPseq.csv"
@@ -118,7 +118,7 @@ echo "Parsing of arlequin file completed."
 
 # Generating the FASTA file for each sample.
 echo "Sequences per sample will be produced."
-chmod +x ./generatefasta_script.sh
+chmod +x generatefasta_script.sh
 ./generatefasta_script.sh -p ${prefix} -i ${prefix}_indices.txt -r ${prefix}_tempseq.fa -s ${prefix}_SNPseq.csv
 if [[ -f "${prefix}.fasta" ]]; then
         echo "File ${prefix}.fasta created."
@@ -130,6 +130,7 @@ echo "Simulated genomes per sample are stored in ${prefix}.fasta"
 
 # Parsing file for art_illumina and running art_illumina
 echo "ART_illumina will be performed to simulate library preparation and sequencing processes."
+chmod +x art_illum.sh
 ./art_illum.sh -p ${prefix} -i ${input_file} -a ${art_loc}
 if compgen -G "*.fq" > /dev/null; then
     echo "Output files generated."
