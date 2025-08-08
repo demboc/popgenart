@@ -44,7 +44,7 @@ rule all:
     input:
         "scripts_ready.flag",
         f"{prefix}/results/.organized",
-        f"{prefix}/intermediate_files/.organized"
+        f"{prefix}/intermediate_files/.organized",
 
 
 # Rule to ensure all scripts are executable with permissions
@@ -69,14 +69,15 @@ rule chmod_scripts:
 # Rule to generate .par file from input CSV
 rule generate_par_file:
     input:
-        csv=input_file
+        csv=input_file,
+        flag="scripts_ready.flag"
     output:
         par=f"{prefix}.par"
     params:
         prefix=prefix
     shell:
         """
-        scripts/parser_script.sh -i {input} -p {params.prefix}
+        scripts/parser_script.sh -i {input.csv} -p {params.prefix}
         if [[ -f {output} ]]; then
             echo "File {output} created."
         else
@@ -90,7 +91,7 @@ rule generate_par_file:
 # Rule to run fastsimcoal to generate .arp file
 rule run_fsc:
     input:
-        par=f"{prefix}.par"
+        par=f"{prefix}.par",
     output:
         arp=f"{prefix}.arp"
     params:
@@ -113,14 +114,15 @@ rule run_fsc:
 # Rule to generate dummy reference sequence
 rule generate_dummy_sequence:
     input:
-        csv=input_file
+        csv=input_file,
+        flag="scripts_ready.flag"
     output:
         fasta=f"{prefix}_tempseq.fa"
     params:
         prefix=prefix
     shell:
         """
-        scripts/dummygen_script.sh -c {input} -p {params.prefix}
+        scripts/dummygen_script.sh -c {input.csv} -p {params.prefix}
         if [[ -f {output} ]]; then
             echo "File {output} created."
         else
@@ -133,7 +135,8 @@ rule generate_dummy_sequence:
 # Rule to parse .arp file from run_fsc to get indices and SNP data
 rule parse_arp:
     input:
-        arp=f"{prefix}.arp"
+        arp=f"{prefix}.arp",
+        flag="scripts_ready.flag"
     output:
         indices=f"{prefix}_indices.txt",
         snps=f"{prefix}_SNPseq.csv"
@@ -141,7 +144,7 @@ rule parse_arp:
         prefix=prefix
     shell:
         """
-        scripts/parse_arp.sh -p {params.prefix} -a {input}
+        scripts/parse_arp.sh -p {params.prefix} -a {input.arp}
         if [[ -f {output.snps} && -f {output.indices} ]]; then
             echo "SNPs are saved in {output.snps}"
 	        echo "Locations of SNPs saved in {output.indices}"
@@ -157,7 +160,8 @@ rule generate_fasta:
     input:
         indices=f"{prefix}_indices.txt",
         tempseq=f"{prefix}_tempseq.fa",
-        SNPcsv=f"{prefix}_SNPseq.csv"
+        SNPcsv=f"{prefix}_SNPseq.csv",
+        flag="scripts_ready.flag"
     output:
         f"{prefix}.fasta"
     params:
@@ -179,7 +183,8 @@ if is_paired:
     rule simulate_reads:
         input:
             fasta=f"{prefix}.fasta",
-            csv="sample_input.csv"
+            csv="sample_input.csv",
+            flag="scripts_ready.flag"
         output:
             fq1=f"{prefix}1.fq",
             fq2=f"{prefix}2.fq",
@@ -197,7 +202,8 @@ else:
     rule simulate_reads:
         input:
             fasta=f"{prefix}.fasta",
-            csv="sample_input.csv"
+            csv="sample_input.csv",
+            flag="scripts_ready.flag"
         output:
             fq1=f"{prefix}.fq",
             aln1=f"{prefix}.aln",
@@ -213,7 +219,7 @@ else:
 # Rule to move outputs and intermediate files in their respective directories after everything
 rule organize_files:
     input:
-        flag=f"{prefix}.sam"
+        flag=f"{prefix}.sam",
     output:
         results_flag=f"{prefix}/results/.organized",
         intermediate_flag=f"{prefix}/intermediate_files/.organized"
